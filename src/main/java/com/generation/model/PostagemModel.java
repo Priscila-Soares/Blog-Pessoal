@@ -1,23 +1,25 @@
 package com.generation.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity 
+@Entity
 @Table(name = "tb_postagens")
 public class PostagemModel {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titulo;
+
     private String texto;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "tema_id")
+    @JsonIgnoreProperties("postagens")
+    private TemaModel tema;
+
     public Long getId() {
         return id;
     }
@@ -40,5 +42,13 @@ public class PostagemModel {
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public TemaModel getTema() {
+        return tema;
+    }
+
+    public void setTema(TemaModel tema) {
+        this.tema = tema;
     }
 }
